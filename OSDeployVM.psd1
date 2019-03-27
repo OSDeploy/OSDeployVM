@@ -18,7 +18,7 @@
 ModuleToProcess = 'OSDeployVM.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.0.8'
+ModuleVersion = '19.3.26.0'
 
 # ID used to uniquely identify this module
 GUID = 'e3c1786b-25e3-4315-a709-30e091828fcc'

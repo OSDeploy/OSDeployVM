@@ -1,15 +1,14 @@
-﻿<#	
-	===========================================================================
-	 Created with: 	SAPIEN Technologies, Inc., PowerShell Studio 2015 v4.2.83
-	 Created on:   	4/9/2017 3:35 PM
-	 Created by:   	David Segura
-	 Organization: 	
-	 Filename:     	OSDeployVM.psm1
-	-------------------------------------------------------------------------
-	 Module Name: OSDeployVM
-	===========================================================================
-#>
+﻿#===================================================================================================
+#   Import Functions
+#   https://github.com/RamblingCookieMonster/PSStackExchange/blob/master/PSStackExchange/PSStackExchange.psm1
+#===================================================================================================
+$OSDPublicFunctions  = @( Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction SilentlyContinue )
+$OSDPrivateFunctions = @( Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction SilentlyContinue )
 
-. $PSScriptRoot\Install-HyperV.ps1
-. $PSScriptRoot\New-VMachine.ps1
-. $PSScriptRoot\Set-HyperVDefaults.ps1
+foreach ($Import in @($OSDPublicFunctions + $OSDPrivateFunctions)) {
+    Try {. $Import.FullName}
+    Catch {Write-Error -Message "Failed to import function $($Import.FullName): $_"}
+}
+
+Export-ModuleMember -Function $OSDPublicFunctions.BaseName
+#===================================================================================================
